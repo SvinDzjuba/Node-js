@@ -49,7 +49,7 @@ app.get('/films-actor-play-by-lastname/:lastname', function (req, res) {
 });
 
 app.get('/genre-films', function (req, res) {
-    db.query('SELECT name FROM category as C inner join film_category as FC on C.category_id = FC.category_id GROUP BY name', function (error, results) {
+    db.query('SELECT name, COUNT(F.film_id) as counter FROM category as C inner join film_category as FC on C.category_id = FC.category_id inner join film as F on FC.film_id = F.film_id GROUP BY name', function (error, results) {
         if (error) throw error;
         return res.send({data: results});
     });
